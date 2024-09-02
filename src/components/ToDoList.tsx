@@ -1,27 +1,22 @@
 import DeleteButton from './DeleteButton'
+import { useTodosContext } from '../lib/hooks'
 
-export default function ToDoList({ todos, setTodos }) {
-  
+export default function ToDoList() {
+ 
+  const { todos, handleToggleTodo, handleDeleteTodo } = useTodosContext()
   return (
     <ul>
       {todos.length === 0 && (
         <li className="h-full flex  justify-center items-center font-semibold">
           Start by Adding a todo
         </li>
-      ) }
+      )}
       {todos.map((todo) => (
         <li
           key={todo.id}
           className="flex justify-between items-center px-8 h-[50px] text-[14px] cursor-pointer border-b border-black/[8%] "
           onClick={() => {
-            setTodos(
-              todos.map((t) => {
-                if (t.id === todo.id) {
-                  return { ...t, isCompleted: !t.isCompleted }
-                }
-                return t
-              })
-            )
+            handleToggleTodo(todo.id)
           }}>
           <span
             className={`${
@@ -29,7 +24,7 @@ export default function ToDoList({ todos, setTodos }) {
             } `}>
             {todo.text}
           </span>{' '}
-          <DeleteButton id={todo.id} setTodos={setTodos} />
+          <DeleteButton id={todo.id} onDeleteTodo={handleDeleteTodo} />
         </li>
       ))}
     </ul>

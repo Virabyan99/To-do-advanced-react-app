@@ -1,8 +1,10 @@
-export default function Counter({ todos }) {
+import { useTodosContext } from '../lib/hooks'
+
+export default function Counter() {
+  const { totaoNmberOfTodo, numberOfCompletedTodos } = useTodosContext()
   return (
     <p>
-      <b>{todos.filter((todo) => todo.isCompleted).length}</b> / {todos.length}{' '}
-      todos completed
+      <b>{numberOfCompletedTodos}</b> / {totaoNmberOfTodo} todos completed
     </p>
   )
 }
