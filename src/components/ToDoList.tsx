@@ -1,10 +1,14 @@
 import DeleteButton from './DeleteButton'
 
-
-
-export default function ToDoList({todos, setTodos}) {
+export default function ToDoList({ todos, setTodos }) {
+  
   return (
     <ul>
+      {todos.length === 0 && (
+        <li className="h-full flex  justify-center items-center font-semibold">
+          Start by Adding a todo
+        </li>
+      ) }
       {todos.map((todo) => (
         <li
           key={todo.id}
