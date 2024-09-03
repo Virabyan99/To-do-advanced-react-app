@@ -8,10 +8,10 @@ import { KindeProvider } from '@kinde-oss/kinde-auth-react'
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <KindeProvider
-		clientId="c357d34286af41cbb3b0be26e0f44cc8"
+		clientId="ee733623737f438388346951a53b1a58"
 		domain="https://todoappforfree.kinde.com"
-		redirectUri="http://localhost:5173"
-		logoutUri="http://localhost:5173"
+		redirectUri="https://to-do-advanced-react-app.vercel.app/"
+		logoutUri="https://to-do-advanced-react-app.vercel.app/"
 	>
 
     <TodosContextProvider>
