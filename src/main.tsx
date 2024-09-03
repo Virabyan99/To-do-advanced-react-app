@@ -12,6 +12,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 		domain="https://todoappforfree.kinde.com"
 		redirectUri="https://to-do-advanced-react-app.vercel.app/"
 		logoutUri="https://to-do-advanced-react-app.vercel.app/"
+    isDangerouslyUseLocalStorage={true}
 	>
 
     <TodosContextProvider>
