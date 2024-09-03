@@ -1,5 +1,6 @@
-import { createContext, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
 import { Todo } from '../lib/types'
+import { useKindeAuth } from '@kinde-oss/kinde-auth-react'
 
 type TodosContextProviderProps = {
   children: React.ReactNode
@@ -15,18 +16,28 @@ type TTodosContext = {
 
 export const TodosContext = createContext<TTodosContext | null>(null)
 
+const getInitialTodos = () => {
+  const savedTodos = localStorage.getItem('todos')
+  if (savedTodos) {
+    return JSON.parse(savedTodos)
+  } else {
+    return []
+  }
+}
+
 export default function TodosContextProvider({
   children,
 }: TodosContextProviderProps) {
+  const {isAuthenticated} = useKindeAuth()
   // state
-  const [todos, setTodos] = useState<Todo[]>([])
+  const [todos, setTodos] = useState<Todo[]>(getInitialTodos)
 
   // derived state
   const totaoNmberOfTodo = todos.length
   const numberOfCompletedTodos = todos.filter((todo) => todo.isCompleted).length
   // event handlers // actions
   const handleAddTodo = (todoText: string) => {
-    if (todos.length >= 3) {
+    if (todos.length >= 3 && !isAuthenticated) {
       alert('Login to add more than 3 todos')
       return
     } else {
@@ -54,17 +65,11 @@ export default function TodosContextProvider({
     setTodos((prev) => prev.filter((todo) => todo.id !== id))
   }
 
-//   // side effects
-//   useEffect(() => {
-//     const fetchTodos = async () => {
-//       const response = await fetch(
-//         'https://bytegrad.com/course-assets/api/todos'
-//       )
-//       const todos = await response.json()
-//       setTodos(todos)
-//     }
-//     fetchTodos()
-//   }, [])
+  //   // side effects
+
+  useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(todos))
+  }, [todos])
 
   return (
     <TodosContext.Provider
